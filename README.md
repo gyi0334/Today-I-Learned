@@ -1,3 +1,6 @@
-# Today-I-Learned
+# Recurrent Convolutional Neural Network for Object Recognition
 
-깃 풋싀 해보자고~
+## Abstract
+
+### test
+test
