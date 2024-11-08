@@ -17,3 +17,21 @@ CNN은 1943년 제안된 첫 인공 뉴런에서 기원한 인공 신경망의 �
 본 논문에서는 정적 객체 인식을 위한 순환 합성곱 신경망(recurrent CNN)을 제안한다. 구조는 Figure 2에 있으며, Feed-forward와 순환 연결이 모두 국소적인 연결을 가지며 서로 다른 위치에서 weight를 공유한다. 이 구조는 동적 제어에 자주 사용되는 순환 다층 퍼셉트론(Recurrent Multilayer Perceptron, RMLP)과 매우 비슷하다.(Figure 2, middle) 주요 차이점은 RMLP의 전체 연결이 MLP와 CNN간의 차이와 마찬가지로 공유된 국소 연결로 대체된 것이다.[40] 이러한 이유료, 제안된 모델을 순환 합성곱 신경망(RCNN)으로 명하였다.
 
 제안돤 RCNN은 여러 object recognition dataset에서 테스트 되었다. RCNN은 더 적은 parameter를 사용하면서 모든 데이터 셋에서 기존의 최신 CNN보다 더 좋은 결과를 달성했으며, 이는 CNN에 비해 RCNN의 우수성을 입증한다. 나머지 내용은 다음과 같이 구성된다. 2장에서는 관련 연구를 검토하고, 3장에서는 RCNN의 아키텍처를 설명한다. 4장에서는 실험 결과와 분석을 제시하며, 마지막으로 5장에서 본 논문을 결론짓는다.
+
+## 2.Related work
+
+### 2.1 Convolutional neural networks
+
+Hubel과 Wiesel이 고양이 시각 피질에 대해 발견한 획기적인 연구[23][22]에 영감을 받아 Fukushima[13]는 단순 유닛 층과 복합 유닛 층이 쌍을 이루어 쌓여있는 구조인 Neocognitron이라는 계층적 모델을 제안했다. 최초의 CNN은 LeCun 등[28][27]에 의해 제안되었습니다. 기본적으로 CNN은 단순 유닛의 수용 영역을 학습하기 위해 역전파(Back-propagation, BP)알고리즘을 통합함으로서 Neocognitron과 차이가 있다. 탄생 이후 CNN은 국소 연결, 가중치 공유 및 국소 pooling의 특징을 가진다. 첫 번째와 두 번째 특징은 모델이 다층 퍼셉트론(MLP)보다 적은 매개변수로 유용한 지역 사각 패턴을 발견할 수 있게 한다. 세 번째 특성은 네트워크에 어느 정도의 변환 불변성(translation invariance)을 부여한다. Saxe 등[41]의 연구에 따르면, CNN의 뛰어난 성능은 이러한 특성들에 크게 기인하며, 무작위 가중치를 가진 특정 구조도 좋은 결과를 낼 수 있다고 한다. 
+
+지난 몇 년 동안 CNN의 성능을 향상시키기 위한 다양한 기술들이 개발되었다. ReLU 함수(Rectified Linear Function) [14]는 역전파(BP) 알고리즘에서 흔히 발생하는 기울기 소실 문제(gradient vanishing effect)에 강한 저항성을 지녀, 가장 일반적으로 사용되는 활성화 함수가 되었다. 드롭아웃(Dropout) [48]은 학습 과정에서 신경망이 과적합되는 것을 방지하는 효과적인 기법이다. Goodfellow 등[17]은 드롭아웃의 모델 평균화 기능을 활용하기 위해 활성화 함수로 특징 채널에 대한 최대 풀링(max pooling)을 사용했다. 합성곱 유닛의 비선형성을 강화하기 위해, Lin 등[33]은 Network in Network (NIN) 구조를 제안했으며, 여기서 합성곱 연산은 입력 특징 맵 위를 슬라이딩하는 국소 다층 퍼셉트론(MLP) [39]으로 대체되었다. NIN이 과적합되는 것을 방지하기 위해 완전 연결 층 대신 전역 평균 풀링 층(global average pooling layer)이 사용되었다. Simonyan과 Zisserman[44]은 작은 필터의 스택이 동일한 매개변수를 가진 큰 필터보다 더 강한 비선형성을 갖는다는 점을 고려하여, 3×3 합성곱을 사용해 매우 깊은 네트워크를 구축했다. Szegedy 등[50]은 다중 스케일 인셉션 모듈(multi-scale inception modules)을 제안하고 이를 바탕으로 GoogLeNet을 구축했으며, 이 모델에서도 작은 필터가 선호되었다. CNN은 계산 집약적인 모델이어서 CPU로 실행하기 어려운 경우가 많다. GPU의 사용은 CNN의 대규모 데이터셋에 대한 학습과 테스트를 크게 용이하게 했다. CNN의 첫 성공적인 GPU 구현은 ImageNet 대규모 시각 인식 챌린지(ILSVRC) 2012에서 우승한 AlexNet [26]이며, 그 이후 매년 이 대회에 출품된 대부분의 모델은 GPU를 기반으로 한 CNN이다.
+
+### 2.2 Recurrent neural networks
+
+순환 신경망(Recurrent neural network, RNN)은 인공 신경망 분야에서 오랜 역사를 가지고 있다.[4, 21, 11, 37, 10, 24] 그러나 RNN의 성공적인 응용 대부분은 필기 인식[18]이나 음성 인식[19]과 같은 순차 데이터(sequentail data) 모델링에 관련되어 있다. 정적 시각 신호 처리에 RNN을 적용한 몇 가지 연구가 아래에서 간략히 소개된다.
+
+[20]에서는 다차원 RNN(Multi-dimensional RNN, MDRNN)을 오프라인 필기 인식을 위해 제안했다. MDRNN은 이미지를 2차원 순차 데이터로 처리하는 방향성 구조를 가지고 있다. 또한, MDRNN은 단일 은닉층을 가지므로 CNN과 같은 특징 계층 구조를 생성할 수 없다.
+
+[2]에서는 Neural Abstraction Pyramid(NAP)이라는 계층적 RNN을 이미지 처리를 위해 제안했다. NAP은 생물학에서 영감을 받은 아키텍처로 수직 및 횡방향 순환 연결을 통해 이미지 해석이 점진적으로 정제되어 시각적 모호성을 해결한다. 구조 설계 시, 생물학적 타당성이 강조되었다. 예를 들어, 대부분의 딥러닝 모델에서는 고려되지 않는 흥분성 유닛과 억제성 유닛(excitatory and inhibitory unit)을 사용한다. 더 중요한 것은, NAP의 일반적인 프레임 워크에는 순환 및 피드백 연결이 있지만 객체 인식을 위해서는 feed-forward version만 테스트되었다. 순환 NAP은 이미지 재구성(image reconstruction)과 같은 다른 작업에 사용되었다.
+
+NAP 외외에도 일부 다른 계층적 모델에선 top-down 연결이 사용되었다. Lee 등[31]은 비지도 특징 학습을 위해 CDBN(Convolutional deep belief network)을 제안했다. 추론 과정에서 최상위 층의 정보가 중간 층을 거쳐 최하위 층으로 전달될 수 있다. 이 층별 전파 아이디어와는 달리, Pinheiro와 Collobert[36]은 CNN의 최상위 층에서 최하위 층으로 직접 연결되는 추가 연결을 사용했다. 이 모델은 장면 레이블링(scene labeling)에 사용되었다. 이러한 모델들은 RCNN과 다르다. RCNN에서는 동일한 층 내에서 순환 연결이 존재하며 층 간 연결이 아니다.
