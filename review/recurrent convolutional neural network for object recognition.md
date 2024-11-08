@@ -35,3 +35,12 @@ Hubel과 Wiesel이 고양이 시각 피질에 대해 발견한 획기적인 연�
 [2]에서는 Neural Abstraction Pyramid(NAP)이라는 계층적 RNN을 이미지 처리를 위해 제안했다. NAP은 생물학에서 영감을 받은 아키텍처로 수직 및 횡방향 순환 연결을 통해 이미지 해석이 점진적으로 정제되어 시각적 모호성을 해결한다. 구조 설계 시, 생물학적 타당성이 강조되었다. 예를 들어, 대부분의 딥러닝 모델에서는 고려되지 않는 흥분성 유닛과 억제성 유닛(excitatory and inhibitory unit)을 사용한다. 더 중요한 것은, NAP의 일반적인 프레임 워크에는 순환 및 피드백 연결이 있지만 객체 인식을 위해서는 feed-forward version만 테스트되었다. 순환 NAP은 이미지 재구성(image reconstruction)과 같은 다른 작업에 사용되었다.
 
 NAP 외외에도 일부 다른 계층적 모델에선 top-down 연결이 사용되었다. Lee 등[31]은 비지도 특징 학습을 위해 CDBN(Convolutional deep belief network)을 제안했다. 추론 과정에서 최상위 층의 정보가 중간 층을 거쳐 최하위 층으로 전달될 수 있다. 이 층별 전파 아이디어와는 달리, Pinheiro와 Collobert[36]은 CNN의 최상위 층에서 최하위 층으로 직접 연결되는 추가 연결을 사용했다. 이 모델은 장면 레이블링(scene labeling)에 사용되었다. 이러한 모델들은 RCNN과 다르다. RCNN에서는 동일한 층 내에서 순환 연결이 존재하며 층 간 연결이 아니다.
+
+RCNN과 일부 코딩 모델(Sparse coding models) 간에는 흥미로운 관계가 있습니다.[15] 이 모델들에서는 고정점 업데이트(Fixed-point updates)가 추론에 사용되며, 반목 최적화 과정이 암묵적으로 순환 신경망을 정의한다. 지도 학습 기법이 희소 코딩 모델의 비지도 학습 프레임 워크에 통합될 수 있음을 유의하세요[3] 그러나 이러한 기법이 희소 코딩 모델을 객체 인식을 위한 CNN과 경쟁할 수 있을만큼 성능을 높이지 못했다.
+
+마지막으로 우리의 모델은 재귀 층이 동일한 가중치를 공유하는 층의 스택으로 펼쳐지는 재귀 신경망(Recursive neural network)과도 관련이 있다.[46] Socher 등[45]은 장면 구문 분석(Scene parsing)을 수행하기 위해 재귀 신경망을 사용했다. Eigen 등[9]은 재귀 합성곱 신경망을 사용하여 CNN 성능에 영향을 미치는 요인들을 연구했으며, 이는 RCNN의 시간-전개(time-unfolded) 버전과 동일하지만, 각 전개된 층에 feed-forward 입력이 없는 구조이다.
+
+## 3. RCNN Model
+
+### 3.1. Recurrent convolutional layer
+
