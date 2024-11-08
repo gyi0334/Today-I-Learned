@@ -15,3 +15,5 @@ CNN은 1943년 제안된 첫 인공 뉴런에서 기원한 인공 신경망의 �
 객체 인식에서 맥락 정보는 중요하다.(Figure 1) feed-forward model은 상위 층에서만 맥락 정보(the face in Figure 1)를 포착할 수 있지만, 이 정보는 더 작은 객체를 인식하는 하위 층의 유닛 활동을 조절하지는 못한다.(the nose in Figure 1) 이를 해결하기 위해, 상향 연결(top-down connections or feedback)을 사용해 상위 층의 정보를 하위 층으로 전파하는 방법(합성곱 심층 신뢰망, Convolutional deep belief network, CDBN)이 있지만 본 연구에서는 다른 접근법으로 동일한 층 내에서의 연결을 사용하는 전략을 제안한다. 
 
 본 논문에서는 정적 객체 인식을 위한 순환 합성곱 신경망(recurrent CNN)을 제안한다. 구조는 Figure 2에 있으며, Feed-forward와 순환 연결이 모두 국소적인 연결을 가지며 서로 다른 위치에서 weight를 공유한다. 이 구조는 동적 제어에 자주 사용되는 순환 다층 퍼셉트론(Recurrent Multilayer Perceptron, RMLP)과 매우 비슷하다.(Figure 2, middle) 주요 차이점은 RMLP의 전체 연결이 MLP와 CNN간의 차이와 마찬가지로 공유된 국소 연결로 대체된 것이다.[40] 이러한 이유료, 제안된 모델을 순환 합성곱 신경망(RCNN)으로 명하였다.
+
+제안돤 RCNN은 여러 object recognition dataset에서 테스트 되었다. RCNN은 더 적은 parameter를 사용하면서 모든 데이터 셋에서 기존의 최신 CNN보다 더 좋은 결과를 달성했으며, 이는 CNN에 비해 RCNN의 우수성을 입증한다. 나머지 내용은 다음과 같이 구성된다. 2장에서는 관련 연구를 검토하고, 3장에서는 RCNN의 아키텍처를 설명한다. 4장에서는 실험 결과와 분석을 제시하며, 마지막으로 5장에서 본 논문을 결론짓는다.
