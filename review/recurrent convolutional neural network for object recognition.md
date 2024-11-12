@@ -50,3 +50,5 @@ RCNN의 핵심 모듈은 recurrent convolutional layer(재귀적 합성곱 계�
 $$
 z_{ijk}(t) = (w^f_k)^T u_{(i,j)} + (w_k^\tau)^T x_{(i,j)} (t-1)+b_k\\
 $$
+
+이 식에서 $$u_{(i,j)}(t)\\$$와
