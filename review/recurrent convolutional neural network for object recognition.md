@@ -44,3 +44,25 @@ RCNN과 일부 코딩 모델(Sparse coding models) 간에는 흥미로운 관계
 
 ### 3.1. Recurrent convolutional layer
 
+RCNN의 핵심 모듈은 recurrent convolutional layer(재귀적 합성곱 계층, RCL)이다. RCL 유닛의 상태는 이산 시간 단계에서 진화한다. RCL에서 
+𝑘
+k번째 특징 맵에서 위치 
+(
+𝑖
+,
+𝑗
+)
+(i,j)에 있는 유닛의 시간 단계 
+𝑡
+t에서의 순 입력 
+𝑧
+𝑖
+𝑗
+𝑘
+(
+𝑡
+)
+z 
+ijk
+​
+ (t)는 다음과 같이 주어진다.
