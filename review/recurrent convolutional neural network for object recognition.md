@@ -48,5 +48,5 @@ RCNN의 핵심 모듈은 recurrent convolutional layer(재귀적 합성곱 계�
 (𝑖,𝑗)에 있는 유닛의 시간 단계 𝑡에서의 순 입력 𝑧𝑖𝑗𝑘(𝑡)는 다음과 같이 주어진다.
 
 $$
-f(x)=ax^2+bx_2+c_2^3\\
+z_ijk(t) = (w^f_k)^T u(i,j) + (w_k^\tau)^T x_(i,j) (t-1)+b_k\\
 $$
