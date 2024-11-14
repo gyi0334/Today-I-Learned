@@ -53,3 +53,23 @@ $$
 
 이 식에서 𝑢(𝑖,𝑗)(𝑡)와 x(i,j)(t−1)는 각각 순전파 입력(feed-forward input)과 순환 입력(recurrent input)을 나타내며, 이는 이전 계층과 현재 계층의 특징 맵에서 (𝑖,𝑗)를 중심으로 한 벡터화된 패치다.
 $w^f_k$와 $w^\tau_k$는 각각 벡터화된 순전파 가중치와 순환 가중치를 나타내며, $b_k$는 바이어스다. (1)식의 첫 번째 항은 일반적인 CNN에서 사용되고, 두 번째 항은 순환 연결에 의해 도입된 항이다.
+
+이 유닛의 활성화 또는 상태는 그 순 입력의 함수로 정의되며, 수식은 다음과 같다.
+
+$$
+x_{ijk}(t) = g(f(z_{ijk}(t)))\\
+$$
+
+여기서 $f$는 ReLU(Rectified Linear Unit) 활성화 함수로 정의된다.
+
+$$
+f(z_{ijk}(t)) = max(z_{ijk}(t),0)\\
+$$
+
+또한 $g$는 지역 응답 정규화(Local Response Normalization, LRN) 함수이다.
+
+$$
+g(f_{ijk}(t)) = \frac{f_{ijk}(t)}{\left(1 + \frac{\alpha}{N} \sum_{k'=\max(0, k - N/2)}^{\min(K, k + N/2)} (f_{ijk'})^2\right)^{\beta}}
+$$
+
+여기서 $K$는  \( K \)는
