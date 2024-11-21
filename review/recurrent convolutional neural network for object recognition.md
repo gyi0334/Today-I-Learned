@@ -86,6 +86,6 @@ RCNN은 RCL의 스택으로 구성되어 있으며, 선택적으로 맥스 풀�
 마지막으로 Softmax layer가 사용되어 특징 벡터를 $C$개의 카테고리로 분류하며, 그 출력은 다음과 같이 주어진다.
 
 $$
-y_k = {exp(w^t_kx)}/{sum_{k'}exp(w^t_kx)}
+y_k = \{exp(w^t_kx)}{sum_{k'}exp(w^t_kx)}
 $$
 
