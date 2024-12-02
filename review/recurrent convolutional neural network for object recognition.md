@@ -180,6 +180,18 @@ RCNN에서 반복(iteration)을 더 많이 수행하면 학습 오류(training e
 
 이 비교 결과는 RCNN의 멀티-패스 구조가 rCNN의 체인(chain) 구조보다 과적합에 덜 취약하다는 것을 보여준다.
 
+#### 4.2.2 Comparison with state-of-the-art models
+
+<div align="center">
+  <img src="./table2.png" alt="Model Architecture" width="600">
+</div>
+
+우리는 이 데이터셋에서 RCNN과 최신(state-of-the-art) 모델들을 비교하였다. 세 가지 𝐾 값을 가진 모델이 테스트되었는데, 각각 RCNN-96, RCNN-128, RCNN-160이다. 반복(iteration) 횟수는 3으로 설정되었다. 이들 모델은 모두 기존 모델들을 능가했으며, 특징 맵(feature map)의 수가 증가함에 따라 성능이 꾸준히 향상되었다(Table 2 참조).
+
+비교 대상인 기존 모델 중 NIN과 DSN은 약 100만 개의 매개변수를 가지며, 가장 적은 매개변수를 사용한다. 반면 RCNN-96은 이보다 더 적은 매개변수(67만 개)를 사용하면서도 더 나은 결과를 달성하였다.
+
+주목할 점은, maxout 네트워크인 NIN과 DSN은 데이터를 글로벌 대조 정규화(global contrast normalization)와 ZCA 화이트닝으로 전처리한 반면, 우리는 단순히 데이터에서 각 픽셀의 평균값을 뺀 방식만을 사용했다는 것이다.
+
 ## 5. Conclusion
 뇌에 풍부한 재귀 시냅스(recurrent synapses)가 존재한다는 사실에서 영감을 받아, 우리는 (정적) 객체 인식을 위한 재귀 합성곱 신경망(RCNN)을 제안하였다. 기본 아이디어는 피드포워드 CNN의 각 합성곱 레이어 내에 재귀 연결(recurrent connections)을 추가하는 것이었다. 이러한 구조는 같은 레이어 내의 다른 유닛들에 의해 특정 유닛이 조절될 수 있도록 하여, 객체 문맥에서의 통계적 규칙성을 캡처하는 CNN의 능력을 강화하였다.
 
