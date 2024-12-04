@@ -1,5 +1,15 @@
 import tensorflow as tf
 from tensorflow.keras import layers, models
+from tensorflow.keras.datasets import cifar10
+from tensorflow.keras.utils import to_categorical
+import matplotlib.pyplot as plt
+
+# 데이터셋 로드
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+
+# 데이터 전처리
+x_train, x_test = x_train / 255.0, x_test / 255.0  # 정규화
+y_train, y_test = to_categorical(y_train, 10), to_categorical(y_test, 10)
 
 # RCL (Recurrent Convolutional Layer) 정의
 class RCL(layers.Layer):
@@ -38,3 +48,19 @@ def build_rcnn(input_shape=(32, 32, 3), num_classes=10, num_iterations=3):
 # 모델 생성
 rcnn_model = build_rcnn()
 rcnn_model.summary()
+
+# 모델 컴파일
+rcnn_model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+                   loss='categorical_crossentropy',
+                   metrics=['accuracy'])
+
+# 훈련
+history = rcnn_model.fit(x_train, y_train, epochs=10, batch_size=64, validation_data=(x_test, y_test))
+
+# 정확도 시각화
+plt.plot(history.history['accuracy'], label='Train Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
