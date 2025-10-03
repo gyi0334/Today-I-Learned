@@ -1,5 +1,4 @@
 # 머신러닝 교과서 chapter 2
-
 import numpy as np
 
 class Perceptron(object):
