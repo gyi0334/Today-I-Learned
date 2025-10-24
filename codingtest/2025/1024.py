@@ -36,7 +36,7 @@ eigen_pairs.sort(key=lambda k: k[0], reverse=True)
 
 w = np.hstack((eigen_pairs[0][1][:, np.newaxis],
                eigen_pairs[1][1][:, np.newaxis]))
-print('투영 행렬 W:\n', w)
+# print('투영 행렬 W:\n', w)
 
 from sklearn.decomposition import PCA
 
@@ -44,21 +44,10 @@ pca = PCA()
 X_train_pca = pca.fit_transform(X_train_std)
 pca.explained_variance_ratio_
 
-plt.bar(range(1, 14), pca.explained_variance_ratio_, alpha=0.5, align='center')
-plt.step(range(1, 14), np.cumsum(pca.explained_variance_ratio_), where='mid')
-plt.ylabel('Explained variance ratio')
-plt.xlabel('Principal components')
-
-plt.show()
 
 pca = PCA(n_components=2)
 X_train_pca = pca.fit_transform(X_train_std)
 X_test_pca = pca.transform(X_test_std)
-
-plt.scatter(X_train_pca[:, 0], X_train_pca[:, 1])
-plt.xlabel('PC 1')
-plt.ylabel('PC 2')
-plt.show()
 
 from matplotlib.colors import ListedColormap
 
@@ -99,8 +88,29 @@ X_test_pca = pca.transform(X_test_std)
 lr = LogisticRegression(random_state=1)
 lr = lr.fit(X_train_pca, y_train)
 
+
+# 세개의 평균 벡터 만듦
 np.set_printoptions(precision=4)
 mean_vecs = []
 for label in range(1,4):
     mean_vecs.append(np.mean(X_train_std[y_train==label], axis=0))
     print('MV %s: %s\n' % (label, mean_vecs[label - 1]))
+
+"""
+print(X_train_std.shape)
+print(mean_vecs[0].shape)
+"""
+
+# 산포행렬 구하자
+d = 13
+S_W = np.zeros((d,d))
+for label, mv in zip(range(1,4), mean_vecs):
+    class_scatter = np.zeros((d,d)) # 각 클래스에 대한 산포 행렬
+    for row in X_train_std[y_train == label]:
+        row, mv = row.reshape(d, 1), mv.reshape(d, 1) # 열 벡터를 만든다.
+        class_scatter += (row-mv).dot((row-mv).T)
+    S_W += class_scatter # 클래스 산포 행렬을 더한다
+
+print('클래스 내의 산포 행렬: %sx%s' % (S_W.shape[0], S_W.shape[1]))
+
+print('class label var : %s' % np.bincount(y_train[1:]))
