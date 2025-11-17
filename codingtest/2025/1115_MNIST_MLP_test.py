@@ -136,3 +136,7 @@ class NeuralNetMLP(object):
             self.eval_['valid_acc'].append(valid_acc)
 
         return self
+    
+
+nn = NeuralNetMLP(n_hidden=100, l2=0.01, epochs=200, eta=0.0005, minibatch_size=100,
+                  shuffle=True, seed=1)
