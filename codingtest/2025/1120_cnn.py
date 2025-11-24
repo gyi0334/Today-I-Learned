@@ -1,4 +1,5 @@
 import numpy as np
+
 def conv1d(x, w, p=0, s=1):
     w_rot = np.array(w[::-1])
     x_padded = np.array(x)
