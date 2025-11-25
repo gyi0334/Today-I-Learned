@@ -61,3 +61,17 @@ ds_test = ds_raw_test.map(encode_map_fn)
 tf.random.set_seed(1)
 for example in ds_train.shuffle(1000).take(5):
     print('시퀀스 길이 : ', example[0].shape)
+
+# 일부 데이터 추출하기
+ds_subset = ds_train.take(8)
+for example in ds_subset:
+    print('개별 샘플 크기 : ', example[0].shape)
+
+# 배치 데이터 만들기
+ds_batched = ds_subset.padded_batch(4, padded_shapes=([-1], []))
+for batch in ds_batched:
+    print('배치 차원 : ', batch[0].shape)
+
+train_data = ds_train.padded_batch(32, padded_shapes=([-1],[]))
+valid_data = ds_valid.padded_batch(32, padded_shapes=([-1],[]))
+test_data = ds_test.padded_batch(32, padded_shapes=([-1],[]))
