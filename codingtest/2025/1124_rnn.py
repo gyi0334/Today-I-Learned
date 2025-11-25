@@ -25,7 +25,7 @@ ds_raw_train_valid = ds_raw.skip(25000)
 ds_raw_train = ds_raw_train_valid.take(20000)
 ds_raw_valid = ds_raw_train_valid.skip(20000)
 
-print('--------------------------------------')
+print('---------------------------------------')
 
 # STEP 02. 고유 토큰(단어) 찾기
 from collections import Counter
@@ -75,3 +75,24 @@ for batch in ds_batched:
 train_data = ds_train.padded_batch(32, padded_shapes=([-1],[]))
 valid_data = ds_valid.padded_batch(32, padded_shapes=([-1],[]))
 test_data = ds_test.padded_batch(32, padded_shapes=([-1],[]))
+
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.layers import SimpleRNN
+from tensorflow.keras.layers import Dense
+
+embedding_dim=20
+vocab_size = len(token_counts) + 2
+tf.random.set_seed(1)
+# 모델 만들기
+bi_lstm_model = tf.keras.Sequential([tf.keras.layers.Embedding(input_dim=vocab_size,
+                                                               output_dim=embedding_dim,
+                                                               name='embed-layer'),
+                                                               
+                                    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, name='lstm-layer'),
+                                                                  name='bidir-lstm'),
+                                                                  
+                                    tf.keras.layers.Dense(64, activation='relu'),
+                                    
+                                    tf.keras.layers.Dense(1, activation='sigmoid')])
+bi_lstm_model.summary()
