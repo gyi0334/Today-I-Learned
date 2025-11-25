@@ -35,3 +35,7 @@ for example in ds_raw_train:
     token_counts.update(tokens)
 print('어휘 사전 크기 : ', len(token_counts))
 
+# STEP 03. 고유 토큰을 정수로 인코딩하기
+encoder = tfds.deprecated.text.TokenTextEncoder(token_counts)
+example_str = 'This is an example!'
+print(encoder.encode(example_str))
