@@ -96,3 +96,13 @@ bi_lstm_model = tf.keras.Sequential([tf.keras.layers.Embedding(input_dim=vocab_s
                                     
                                     tf.keras.layers.Dense(1, activation='sigmoid')])
 bi_lstm_model.summary()
+
+# 컴파일과 훈련
+bi_lstm_model.compile(optimizer=tf.keras.optimizers.Adam(1e-3),
+                      loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
+                      metrics=['accuracy'])
+history = bi_lstm_model.fit(train_data, validation_data=valid_data, epochs=10)
+
+# 테스트 데이터에서 평가
+test_results = bi_lstm_model.evaluate(test_data)
+print('test accuracy : {:.2f}%'.format(test_results[1]*100))
