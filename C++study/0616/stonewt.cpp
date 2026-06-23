@@ -16,4 +16,22 @@ Stonewt::Stonewt(int stn, double lbs)
     pounds = stn * Lbs_per_stn + lbs;
 }
 
-Stone
+Stonewt::Stonewt()
+{
+    stone = pounds = pds_left = 0;
+}
+
+Stonewt::~Stonewt()
+{
+
+}
+
+void Stonewt::show_stn() const
+{
+    cout << stone << " stone, " << pds_left << " pounds\n";
+}
+
+void Stonewt::show_lbs() const
+{
+    cout << pounds << " pounds\n";
+}
