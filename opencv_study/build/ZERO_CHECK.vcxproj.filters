@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\porsche\Documents\GitHub\Today-I-Learned\opencv_study\build\CMakeFiles\8349a8a54159a8f518ef7b0e654bed29\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{738EC3D1-6B46-3B33-BD01-148F56DEB706}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

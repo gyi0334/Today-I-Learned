@@ -1,0 +1,3 @@
+C:/Users/porsche/Documents/GitHub/Today-I-Learned/opencv_study/build/CMakeFiles/OpenCVStudy.dir
+C:/Users/porsche/Documents/GitHub/Today-I-Learned/opencv_study/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/porsche/Documents/GitHub/Today-I-Learned/opencv_study/build/CMakeFiles/ZERO_CHECK.dir

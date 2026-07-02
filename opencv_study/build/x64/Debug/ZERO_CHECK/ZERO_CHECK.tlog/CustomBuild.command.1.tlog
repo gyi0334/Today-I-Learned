@@ -1,0 +1,10 @@
+^C:\USERS\PORSCHE\DOCUMENTS\GITHUB\TODAY-I-LEARNED\OPENCV_STUDY\BUILD\CMAKEFILES\8349A8A54159A8F518EF7B0E654BED29\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/porsche/Documents/GitHub/Today-I-Learned/opencv_study -BC:/Users/porsche/Documents/GitHub/Today-I-Learned/opencv_study/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/porsche/Documents/GitHub/Today-I-Learned/opencv_study/build/OpenCVStudy.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
