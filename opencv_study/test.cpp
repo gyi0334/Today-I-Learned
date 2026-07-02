@@ -1,30 +1,25 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
+using namespace cv;
+using namespace std;
+
+
 int main()
 {
-    cv::VideoCapture cap(0);
+    cout << "Hello OpenCV " << CV_VERSION << endl;
+    
+    Mat img;
+    img = imread("lenna.bmp");
 
-    if (!cap.isOpened())
-    {
-        std::cout << "Camera open failed" << std::endl;
+    if(img.empty()){
+        cerr << "Image load failed!" << endl;  
         return -1;
     }
 
-    cv::Mat frame;
+    namedWindow("image");
+    imshow("image", img);
 
-    while (true)
-    {
-        cap >> frame;
-
-        if (frame.empty())
-            break;
-
-        cv::imshow("Webcam", frame);
-
-        if (cv::waitKey(1) == 27)
-            break;
-    }
-
+    waitKey();
     return 0;
 }
